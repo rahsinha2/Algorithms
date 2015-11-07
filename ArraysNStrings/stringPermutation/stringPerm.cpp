@@ -1,3 +1,10 @@
+/* This algo runs in linear time
+ *
+ * another approch is sort the two strings and then compare them
+ *
+ * so that will be in nlogn time
+ * *****************************************/
+
 #include<iostream>
 #include<string.h>
 #include<stdio.h>
