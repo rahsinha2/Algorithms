@@ -15,7 +15,6 @@ int main(int argc, char ** argv)
 	char string[100];
 	strncpy(string, argv[1], len);
 	string[len] = '\0';
-	cout<<string<<"\n\n";
 	compress(string, len);
 	cout<<"\nCompressed string is : "<<string<<"\n";
 	return 0;
