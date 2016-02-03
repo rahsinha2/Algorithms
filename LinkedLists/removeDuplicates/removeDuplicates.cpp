@@ -1,4 +1,5 @@
 #include<iostream>
+#include<unordered_set>
 #include<stdio.h>
 #include<stdlib.h>
 using namespace std;
@@ -11,6 +12,7 @@ class node {
 void append(node ** head, int data);	
 void printList(node * head);
 void removeDuplicates(node ** head);
+void removeDuplicatesHashTable(node ** head);
 
 int main(int argc, char** argv)
 {
@@ -28,7 +30,8 @@ int main(int argc, char** argv)
 	append(&head,6);	
 	append(&head,6);	
 	printList(head);
-	removeDuplicates(&head);
+	//removeDuplicates(&head);    /* n square complexity */
+        removeDuplicatesHashTable(&head);  /* n complexity */
 	printList(head);
 	return 0;
 }
@@ -56,6 +59,8 @@ void printList(node * head)
 	}
 	cout<<"NULL"<<endl;
 }
+
+/* This removes in n square time */
 void removeDuplicates(node ** head)
 {
 	if (*head == NULL)
@@ -79,5 +84,34 @@ void removeDuplicates(node ** head)
 		ptr1 = ptr1->next;
 	}
 }
+/* This removes in O(n) linear time using hash set*/
+void removeDuplicatesHashTable(node ** head)
+{
+	if (*head == NULL || (*head)->next == NULL)
+		return;
+	unordered_set<int> myset;	
+	node * curr = *head;
+	node * prev = NULL;
+	node * dup = NULL;
+	/*
+	for ( auto it = myset.begin(); it != myset.end(); ++it )
+        	std::cout << " " << *it;
+	*/
+	
+	while(curr!= NULL)	{
+		auto present = myset.find(curr->data);
+		if(present != myset.end())	{
+			prev->next = curr->next;
+			dup = curr;
+			curr = curr->next;
+			delete dup;
+		}	
+		else {
+			myset.insert(curr->data);
+			prev = curr;
+			curr = curr->next;
+		}	
+			
+	}
 
-
+}
