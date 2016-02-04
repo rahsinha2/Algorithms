@@ -60,40 +60,29 @@ void printList(node * h)
 }
 void sum(node * head1, node * head2, node ** sumHead)
 {
-	if (head1 == NULL) {
-		*sumHead = head2;
-		return;
-	}
-	if (head2 == NULL) {
-		*sumHead = head1;
-		return;
-	}
+        if (head1 == NULL) {
+                *sumHead = head2;
+                return;
+        }
+        if (head2 == NULL) {
+                *sumHead = head1;
+                return;
+        }
 
-	int carry = 0;
-	int sum = 0;
-		
-	while(head1 != NULL && head2 != NULL)	{
-		sum = head1->data + head2->data + carry;
-		append(sumHead, sum%10);
-		head1 = head1->next;	
-		head2 = head2->next;	
-		carry = sum/10;
-	}
-		
-	if(head1 == NULL && head2 == NULL)	{
-		if(carry>0)	{
-			append(sumHead, carry);
-		}
-		return;
-	}
-	node * head = head2;
-	if(head1 != NULL)
-		head = head1;
+        int carry = 0;
+        int sum = 0;
 
-	while(head != NULL)	{
-		sum = head->data + carry;
-		append(sumHead, sum%10);
-		head = head->next;
-		carry = sum/10;
-	}
+        while(head1 != NULL || head2 != NULL)   {
+                sum = (head1 ? head1->data:0) + (head2 ? head2->data:0) + carry;
+                append(sumHead, sum%10);
+                carry = sum/10;
+
+                if (head1)
+                        head1 = head1->next;
+                if (head2)
+                        head2 = head2->next;
+        }
+
+        if(carry>0)
+                append(sumHead, carry);
 }
